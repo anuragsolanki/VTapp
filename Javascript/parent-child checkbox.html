@@ -21,6 +21,7 @@ bikes: [V-rod, pulsar, cbz] -->
 	#colorSubBox, #moviesSubBox, #drinksSubBox, #bikesSubBox
 	{
 		margin-left:50px;
+		margin-top:10px;
 		display:none;
 	}
 	</style>
@@ -32,6 +33,7 @@ bikes: [V-rod, pulsar, cbz] -->
 		if(objCBox.checked == true)
 		{
 			objDiv.style.display = 'block';
+			document.getElementById("container").scrollTop = document.getElementById(box+"Container").offsetTop - 10;
 		}
 		else
 		{
@@ -40,7 +42,7 @@ bikes: [V-rod, pulsar, cbz] -->
 		var nodes = objDiv.childNodes;
 		for(i=0; i<nodes.length; i++) {
 			nodes[i].checked = objCBox.checked;
-		}
+		}		
 	}
 	</script>
 </head>
