@@ -1,0 +1,84 @@
+<!-- Create a div with height 100 and scroll bars. Display a list of checkbox color, drinks, movies and bikes in this div. Now when you click on color checkbox it should display four checkboxes(red, yellow, green, blue) as a child list and color checkbox should be checked with its child list of checkboxes. Again when you click on color checkbox child list should be hidden and its child checkboxes should get deselected(clear state). Same with movies, drink and bikes.
+
+movies: [Dar, Sir]
+drinks: [coke, pepsi, dew]
+bikes: [V-rod, pulsar, cbz] -->
+
+<html>
+<head>
+	<title>Parent-child checkboxes</title>
+	<style type='text/css'>
+	body
+	{
+		height: 100px;
+	}
+	#container
+	{
+		height:100px;
+		border: 2px inset grey;
+		overflow:scroll;
+	}
+	#colorSubBox, #moviesSubBox, #drinksSubBox, #bikesSubBox
+	{
+		margin-left:50px;
+		display:none;
+	}
+	</style>
+	<script type='text/javascript'>
+	function toggleDisplay(box)
+	{	
+		var objDiv = document.getElementById(box+'SubBox');
+		var objCBox = document.getElementById(box+'CBox');
+		if(objCBox.checked == true)
+		{
+			objDiv.style.display = 'block';
+		}
+		else
+		{
+			objDiv.style.display = 'none';
+		}
+		var nodes = objDiv.childNodes;
+		for(i=0; i<nodes.length; i++) {
+			nodes[i].checked = objCBox.checked;
+		}
+	}
+	</script>
+</head>
+<body>
+	<div id='container'>
+		<div id='colorContainer'>
+			<input type='checkbox' id='colorCBox' onclick='toggleDisplay("color");'>Color
+			<div id='colorSubBox'>
+				<input type='checkbox'>Red<br>
+				<input type='checkbox'>Green<br>
+				<input type='checkbox'>Blue<br>
+				<input type='checkbox'>Yellow<br>
+			</div>
+		</div>
+		<div id='drinksContainer'>
+			<input type='checkbox' id='drinksCBox' onclick='toggleDisplay("drinks");'>Drinks
+			<div class='subBox' id='drinksSubBox'>
+				<input type='checkbox'>Coke<br>
+				<input type='checkbox'>Pepsi<br>
+				<input type='checkbox'>Dew<br>
+			</div>
+		</div>
+		<div id='moviesContainer'>
+			<input type='checkbox' id='moviesCBox' onclick='toggleDisplay("movies");'>Movies
+			<div class='subBox' id='moviesSubBox'>
+				<input type='checkbox'>Dar<br>
+				<input type='checkbox'>Sir<br>
+			</div>
+		</div>
+		<div id='bikesContainer'>
+			<input type='checkbox' id='bikesCBox' onclick='toggleDisplay("bikes");'>Bikes
+			<div class='subBox' id='bikesSubBox'>
+				<input type='checkbox'>Passion<br>
+				<input type='checkbox'>Discover<br>
+				<input type='checkbox'>Pulser<br>
+				<input type='checkbox'>CBZ<br>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

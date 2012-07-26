@@ -1,0 +1,96 @@
+<!-- Create a table like https://www.dropbox.com/s/4g5jvz1srttm5jm/table_dom.png
+When you click on 'Add new row' button, it should add a new row in the table, in the name and email column there will a textfield and in the action column there will be a button save. When you enter some value in textfields and click save, values will be saved and textfields will be replaced by the values entered, and save button will be replace by edit / delete links. You should be able to delete row by clicking on the delete link, and edit value by clicking on the edit link. -->
+
+<html>
+<head>
+	<title>Dynamic Table</title>
+	<style>
+	table tr th { width: 150px; }
+	.pointer { cursor: pointer }
+	</style>
+
+	<script type='text/javascript'>
+	function addRow()	{
+		var tabObj = document.getElementById('tableView');
+		var lastRow = tabObj.rows.length;
+		var rowObj = tabObj.insertRow(lastRow);
+		var cell1 = rowObj.insertCell(0);
+		var textName = document.createElement('input');
+		textName.type = 'text';
+		textName.id = "name"+lastRow;
+		cell1.appendChild(textName);
+		var cell2 = rowObj.insertCell(1);
+		var textEmail = document.createElement('input');
+		textEmail.type = 'text';
+		textEmail.id = "email"+lastRow;
+		cell2.appendChild(textEmail);
+		var cell3 = rowObj.insertCell(2);
+		rowObj.id = 'row'+lastRow;
+		cell3.innerHTML = "<span id='editSave"+lastRow+"'><span class='pointer' id='save"+lastRow+"' onclick='saveRow("+lastRow+");'>Save</span></span> / <span class='pointer' onclick='deleteRow("+lastRow+");'>Delete</span>";
+	}
+
+	function saveRow(num) {
+		var nameNode = document.getElementById('name'+num);
+		var nameParent = nameNode.parentNode;
+		var namevalue = nameNode.value;
+		nameParent.removeChild(nameNode);
+		var textName = document.createElement('span');
+		textName.id = "name"+num;
+		textName.innerHTML = namevalue;
+		nameParent.appendChild(textName);
+		var emailNode = document.getElementById('email'+num);
+		var emailParent = emailNode.parentNode;
+		var emailValue = emailNode.value;
+		emailParent.removeChild(emailNode);
+		var emailName = document.createElement('span');
+		emailName.id = "email"+num;
+		emailName.innerHTML = emailValue;
+		emailParent.appendChild(emailName);
+		document.getElementById("editSave"+num).innerHTML = "<span class='pointer' id='edit"+num+"' onclick='editRow("+num+");'>Edit</span>";
+	}
+
+	function editRow(num) {
+		var nameNode = document.getElementById('name'+num);
+		var nameParent = nameNode.parentNode;
+		var namevalue = nameNode.innerHTML;
+		nameParent.removeChild(nameNode);
+		var textName = document.createElement('input');
+		textName.type = 'text';
+		textName.id = "name"+num;
+		textName.value = namevalue;
+		nameParent.appendChild(textName);
+		var emailNode = document.getElementById('email'+num);
+		var emailParent = emailNode.parentNode;
+		var emailValue = emailNode.innerHTML;
+		emailParent.removeChild(emailNode);
+		var textEmail = document.createElement('input');
+		textEmail.type = 'text';
+		textEmail.id = "email"+num;
+		textEmail.value = emailValue;
+		emailParent.appendChild(textEmail);
+		document.getElementById("editSave"+num).innerHTML = "<span class='pointer' id='save"+num+"' onclick='saveRow("+num+");'>Save</span>";
+	}
+
+	function deleteRow(num) {
+		var rowObj = document.getElementById('row'+num);
+		rowObj.parentNode.removeChild(rowObj); 
+	}
+	</script>
+</head>
+<body>
+	<table border='1' cellpadding='10px' id='tableView'>
+		<tr>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Actions</th>
+		</tr>
+		<tr id="row1">
+			<td><span id='name1'>Akhil Bansal</span></td>
+			<td><span id='email1'>akhil@vinsol.com</span></td>
+			<td><span id='editSave1'><span class='pointer' onclick='editRow(1);'>Edit</span></span> / <span class='pointer' onclick='deleteRow(1);'>Delete</span></td>
+		</tr>
+
+	</table>
+	<input type='button' onclick='addRow();' value='Add New Row'>
+</body>
+</html>
