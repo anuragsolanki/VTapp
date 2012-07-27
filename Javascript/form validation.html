@@ -16,47 +16,43 @@ If any field is invalid then it should not submit the form. Also It should also 
 	   .center {text-align:center;font-weight:normal;}
 	   #go {background:#82D682;}
 	</style>
-	<script type='text/javascript'>
-		var emptyFields;
-		var fieldNames = ["Login Id", "Email", "Name", "Homepage URL"];
-		
+	<script type='text/javascript'>		
 		function validateForm()
 	   {
-				if(emptyFields == null)
-				{
-					emptyFields = [document.forms["form9"]["loginId"], document.forms["form9"]["email"], document.forms["form9"]["name"], document.forms["form9"]["homepage"] ];
-				}
 				var flag = true;
-				for(var i = 0; i < emptyFields.length; i++)
+				var inputArray = document.forms["form"].getElementsByTagName("input");
+				for (var index = 0; index < inputArray.length; index++)
 				{
-			     if (emptyFields[i].value==null || emptyFields[i].value=="")
-			     {
-			       alert(fieldNames[i] + " can't be empty");
-			       flag=false;
-			     }
+					if (inputArray[index].type == 'text') {
+						if (inputArray[index].value == "")
+				     {
+				       alert(inputArray[index].name + " can't be empty");
+				       flag = false;
+				     }
+					}
 				}
-
-	     var e=document.forms["form9"]["aboutme"].value;
-	     if (e==null || e=="" || e.length<50)
+				
+	     var e=document.forms["form"]["About Me"].value;
+	     if (e=="" || e.length<50)
 	     {
 	       alert("About me should be 50+ characters");
 	       flag=false;
 	     }
 
-	     var f=document.forms["form9"]["notification"].checked;
+	     var f=document.forms["form"]["Notification"].checked;
 	     if (f==false)
 	     {
 	       alert("Notification should be checked");
 	       flag=false;
 	     }
-
+	
 	     return flag;
 	   }
 	 
   </script>
  </head>
  <body>
-  <form name="form9" action="#" method="post" onsubmit="return validateForm()">
+  <form name="form" action="#" method="post" onsubmit="return validateForm();">
    <table class="heavy">
     <colgroup width="40%"></colgroup>
     <colgroup width="60%"></colgroup>
@@ -77,7 +73,7 @@ If any field is invalid then it should not submit the form. Also It should also 
       Login Id
      </td>
      <td>
-      <input type="text" name="loginId" />
+      <input type="text" name="Login Id" />
      </td>
     </tr>
 
@@ -86,7 +82,7 @@ If any field is invalid then it should not submit the form. Also It should also 
       Email
      </td>
      <td>
-      <input type="text" style="background:#FFFF66;" name="email" />
+      <input type="text" style="background:#FFFF66;" name="Email" />
      </td>
     </tr>
 
@@ -95,7 +91,7 @@ If any field is invalid then it should not submit the form. Also It should also 
       Name
      </td>
      <td>
-      <input type="text" style="background:#FFFF66;" name="name" />
+      <input type="text" style="background:#FFFF66;" name="Name" />
      </td>
     </tr>
 
@@ -119,7 +115,7 @@ If any field is invalid then it should not submit the form. Also It should also 
       Homepage
      </td>
      <td>
-      <input type="text" name="homepage" />
+      <input type="text" name="Homepage" />
      </td>
     </tr>
 
@@ -131,13 +127,13 @@ If any field is invalid then it should not submit the form. Also It should also 
 
     <tr>
      <td colspan="2">
-      <textarea rows="10" cols="60" name="aboutme"></textarea>
+      <textarea rows="10" cols="60" name="About Me"></textarea>
      </td>
     </tr>
 
     <tr>
      <td colspan="2">
-      <input type="checkbox" name="notification" id="notification"/>
+      <input type="checkbox" name="Notification" id="notification"/>
       <label for="notification">
        Receive notification of comments.
       </label>
