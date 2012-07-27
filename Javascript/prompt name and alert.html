@@ -1,0 +1,29 @@
+<html>
+<head>
+	<title>
+		Prompt Name and Alert
+	</title>
+	<script type="text/javascript">
+	function getInput()
+	{
+		var fname, lname;
+		do
+		{ 
+			fname = prompt("First Name");
+		}
+		while (fname.replace(/\s/g,"") == "");
+		do
+		{ 
+			lname = prompt("Last Name"); 
+		}
+		while (lname.replace(/\s/g,"") == "");
+
+		var text="Hello "+fname+" "+lname;
+		alert(text);
+		document.write(text);
+	}
+	</script>
+</head>
+<body onLoad="getInput();">
+</body>
+</html>
