@@ -5,7 +5,7 @@ If any field is invalid then it should not submit the form. Also It should also 
 <html>
  <head>
   <title>
-   Form Validation [JavaScript in HTML Exercise]
+   Form Validation
   </title>
   <style type='text/css'>
 	form {margin-left:35%;}
@@ -17,36 +17,24 @@ If any field is invalid then it should not submit the form. Also It should also 
 	   #go {background:#82D682;}
 	</style>
 	<script type='text/javascript'>
+		var emptyFields;
+		var fieldNames = ["Login Id", "Email", "Name", "Homepage URL"];
+		
 		function validateForm()
 	   {
-	     var a=document.forms["form9"]["loginId"].value;
-	     var flag=true;
-	     if (a==null || a=="")
-	     {
-	       alert("Login Id can't be empty");
-	       flag=false;
-	     }
-
-	     var b=document.forms["form9"]["email"].value;
-	     if (b==null || b=="")
-	     {
-	       alert("Email can't be empty");
-	       flag=false;
-	     }
-
-	     var c=document.forms["form9"]["name"].value;
-	     if (c==null || c=="")
-	     {
-	       alert("Name can't be empty");
-	       flag=false;
-	     }
-
-	     var d=document.forms["form9"]["homepage"].value;
-	     if (d==null || d=="")
-	     {
-	       alert("Homepage can't be empty");
-	       flag=false;
-	     }
+				if(emptyFields == null)
+				{
+					emptyFields = [document.forms["form9"]["loginId"], document.forms["form9"]["email"], document.forms["form9"]["name"], document.forms["form9"]["homepage"] ];
+				}
+				var flag = true;
+				for(var i = 0; i < emptyFields.length; i++)
+				{
+			     if (emptyFields[i].value==null || emptyFields[i].value=="")
+			     {
+			       alert(fieldNames[i] + " can't be empty");
+			       flag=false;
+			     }
+				}
 
 	     var e=document.forms["form9"]["aboutme"].value;
 	     if (e==null || e=="" || e.length<50)
