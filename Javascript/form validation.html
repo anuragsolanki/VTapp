@@ -24,7 +24,7 @@ If any field is invalid then it should not submit the form. Also It should also 
 				for (var index = 0; index < inputArray.length; index++)
 				{
 					if (inputArray[index].type == 'text') {
-						if (inputArray[index].value == "")
+						if (inputArray[index].value.trim() == "")
 				     {
 				       alert(inputArray[index].name + " can't be empty");
 				       flag = false;
@@ -33,7 +33,7 @@ If any field is invalid then it should not submit the form. Also It should also 
 				}
 				
 	     var e=document.forms["form"]["About Me"].value;
-	     if (e=="" || e.length<50)
+	     if (e.trim()=="" || e.length<50)
 	     {
 	       alert("About me should be 50+ characters");
 	       flag=false;
