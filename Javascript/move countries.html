@@ -1,0 +1,50 @@
+<!-- Create two multiple selection box like https://www.dropbox.com/s/nxepahp6jc647a9/selection.png
+First box contains list of countries and when you select a country and click on add button. Selected country will disappear from first box and appear in second button. And when you select a country from second box and click on remove button it will disappear from second box and appear in first box -->
+
+<html>
+<head>
+	<title>Move Countries</title>
+	<script>
+	function addOptions(from, to)
+	{
+		while(document.getElementById(from).selectedIndex != -1)
+		{
+			var val = document.getElementById(from).value;
+			var optionNumber = document.getElementById(from).selectedIndex;
+			var Text = document.getElementById(from).options[optionNumber].text;
+			var opt = document.createElement("option");
+			document.getElementById(to).options.add(opt);
+			opt.text = Text;
+			opt.value = val;
+			document.getElementById(from).remove(optionNumber);
+		}
+	}
+	</script>
+</head>
+<body>
+	<table>
+		<tr>
+			<td>
+				<select id="countryParent" multiple='multiple' style='width:200px; height:100px;'>
+					<option value='india'>India</option>
+					<option value='pakistan'>Pakistan</option>
+					<option value='bangladesh'>Bangladesh</option>
+					<option value='sriLanka'>Sir Lanka</option>
+					<option value='nepal'>Nepal</option>
+					<option value='burma'>Burma</option>
+				</select>
+			</td>
+
+			<td>
+
+				<input type='button' onclick="addOptions('countryParent', 'countryChild');" value='   Add  &raquo;  ' /><br><br>
+				<input type='button' onclick="addOptions('countryChild', 'countryParent');" value='&laquo; Remove' />
+			</td>
+			<td>
+				<select id="countryChild" multiple='multiple' style='width:200px;height:100px;'>
+				</select>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
