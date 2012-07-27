@@ -4,19 +4,10 @@
 <head>
 	<title>Check All or None</title>
 	<script type="text/javascript">
-		function checkAll() {
-			var inputFields = document.getElementsByTagName("input");
-			
+		var inputFields = document.getElementsByTagName("input");
+		function checkIt(all) {			
 			for (var i = 0; i < inputFields.length; i++) {
-				inputFields[i].checked = true;
-			}
-		}
-		
-		function uncheckAll() {
-			var inputFields = document.getElementsByTagName("input");
-			
-			for (var i = 0; i < inputFields.length; i++) {
-				inputFields[i].checked = false;
+				inputFields[i].checked = (all == 1 ? true : false);
 			}
 		}
 	</script>
@@ -31,8 +22,8 @@
 		<input type="checkbox" name="black" value="black" /> Black<br />
 	</div>
 	<p>
-		<button type="button" onclick="checkAll();">Check All</button>
-		<button type="button" onclick="uncheckAll();">Uncheck All</button>		
+		<button type="button" onclick="checkIt(1);">Check All</button>
+		<button type="button" onclick="checkIt(0);">Uncheck All</button>		
 	</p>
 </body>
 </html>
