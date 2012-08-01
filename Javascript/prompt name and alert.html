@@ -4,6 +4,11 @@
 		Prompt Name and Alert
 	</title>
 	<script type="text/javascript">
+	function checkNull(str)
+	{
+		return (str.replace(/\s/g,"") == "");
+	}
+	
 	function getInput()
 	{
 		var fname, lname;
@@ -11,12 +16,12 @@
 		{ 
 			fname = prompt("First Name");
 		}
-		while (fname.replace(/\s/g,"") == "");
+		while (checkNull(fname));
 		do
 		{ 
 			lname = prompt("Last Name"); 
 		}
-		while (lname.replace(/\s/g,"") == "");
+		while (checkNull(lname));
 
 		var text="Hello "+fname+" "+lname;
 		alert(text);
