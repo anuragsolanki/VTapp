@@ -1,0 +1,171 @@
+<!-- Timed Arithmetic Quiz -->
+
+<html>
+<head>
+	<title>Timed Arithmetic Quiz</title>
+	<style type="text/css">
+		#timer { float: right; background-color: yellow; }
+		#replaceDiv { width: 50%; }
+		#resultDiv { background-color: yellow; width: 30%; border: 1px solid; padding: 0 0 10 10; }
+	</style>
+	<script type="text/javascript">
+	var secs;
+	var timerID = null;
+	var timerRunning = false;
+	var delay = 1000;
+	var timerDiv = document.getElementById('timer');
+	var answerField = document.getElementById('answer');
+	var questionField = document.getElementById('question');
+	var numer1 = document.getElementById('numer');
+	var maxQuestion;
+	var operator = ["+", "-", "*", "/"];
+	var questions;
+	var answers;
+	var i;
+
+//// TIMER ////
+	function InitializeTimer()
+	{
+	    // Set the length of the timer, in seconds
+	    secs = 60;
+	    StopTheClock();
+	    StartTheTimer();
+	
+			maxQuestion = 20;
+			questions = [];
+			answers = [];
+			i = 0;
+			nextQuestion(0);
+	}
+
+	function StopTheClock()
+	{
+	    if(timerRunning)
+	        clearTimeout(timerID);
+	    timerRunning = false;
+	}
+
+	function StartTheTimer()
+	{
+	    if (secs==0)
+	    {
+					timerDiv.innerHTML = "Time Remaining : " + secs + " secs"
+	        StopTheClock();
+	        // Here's where we put something useful that's supposed to happen after the allotted time.
+					ShowResults(0);
+	    }
+	    else
+	    {
+				if(timerDiv == null)
+					timerDiv = document.getElementById('timer');
+				timerDiv.innerHTML = "Time Remaining : " + secs + " secs"
+	      secs = secs - 1;
+	      timerRunning = true;
+        timerID = self.setTimeout("StartTheTimer()", delay);
+	    }
+	}
+//// TIMER ////
+	
+	//function to get random number from 1 to n
+	function randomToN(maxVal,floatVal)
+	{
+	   var randVal = Math.random()*maxVal;
+		 if(Math.round(randVal)<1){randVal = 1;}
+	   return typeof floatVal=='undefined'? Math.round(randVal) : randVal.toFixed(floatVal);
+	}
+	
+	function nextQuestion(val)
+	{
+		if(numer1 == null)
+			numer1 = document.getElementById('numer');
+		numer1.innerHTML = i+1;
+
+		if(i > 0) {
+			if(answerField == null)
+				answerField = document.getElementById('answer');
+			if(val == 0)
+				{ answers.push(""); }
+			else
+				{ answers.push(answerField.value); }
+			answerField.value = "";
+		}
+
+		i++;
+		if(i > maxQuestion) {
+			StopTheClock();
+			ShowResults(1);
+		}
+		// create a new question
+		var firstDigit = randomToN(20);
+		var secondDigit = randomToN(20);
+		var randomOperator = randomToN(4);
+		var new_question = firstDigit + ' ' + operator[randomOperator-1] + ' ' + secondDigit;
+		questions.push(new_question);
+		if(questionField == null)
+			questionField = document.getElementById('question');
+		questionField.innerHTML = new_question;
+		
+	}
+	
+	function evaluateThis(str)
+	{
+		if(str == "" || str == null)
+			{ return -100; }
+		var s1 = eval(str);
+		
+		// if(s % 1 != 0){	
+			s1 = parseFloat(s1.toFixed(1));
+		return s1;
+	}
+	
+	function ShowResults(param)
+	{
+		if(param == 0)
+			{ alert("Time Out"); }
+		else
+			{ alert("Quiz Completed"); }
+			
+		var score = 0;
+		var result = "<div id='resultDiv'><h4>Your Result</h4>";
+		var correctAnswers = "<h5>Correct Answers for wrong/timeout questions: </h5>";
+		// alert("Questions: " + questions);
+		// alert("Answers: "+answers);
+		for(var j=0; j<questions.length; j++) {
+			// if(evaluateThis(questions[j]) != -100) //(evaluateThis(questions[j]) != NaN)
+			// {
+				if((evaluateThis(questions[j]) != 100) && (evaluateThis(questions[j]) == evaluateThis(answers[j]))){
+					score++;
+				}
+				else {
+					correctAnswers += questions[j] + " = " + evaluateThis(questions[j]) + "<br />";
+				}
+			// }
+		}
+		result += "Score: " + score + " out of " + maxQuestion + "</div>";
+		result += correctAnswers;
+		
+		document.getElementById('replaceDiv').innerHTML = result;
+	}
+	
+	
+	</script>
+</head>
+<body onLoad="InitializeTimer();">
+	<h2>Timed Arithmetic Quiz</h2><h4>(Answer before timeout)</h4><br />
+	<br />
+	<div id='replaceDiv'>
+		Question <span id='numer'>1</span> of 20
+		<div id='timer'>Time Remaining :   secs</div>
+	
+		<div class='questionDiv'>
+			<p>
+				<span id='question'> </span> = 
+				<span><input type="text" id='answer' name="answer" /></span>
+			</p><br />
+			<button type="button" onclick="nextQuestion(1);">Submit and Proceed</button>
+			<button type="button" onclick="nextQuestion(0);">Skip this Question</button>
+		</div>
+	</div>
+	
+</body>
+</html>
