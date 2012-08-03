@@ -1,0 +1,174 @@
+<!-- Implement a calculator like MAC OS X in-built calculator -->
+<html>
+<head>
+	<title>CALCULATOR</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+
+	<style type='text/css'>
+	.complete_boundary { width: 220px; height: 310px; background-color: darkgrey; border: 1px solid grey; -moz-border-radius: 15px;	border-radius: 5px;}
+	.title { text-align: center; color: white;}
+	.screen { height: 40px; background-color: #F1FFD1; padding: 5px; margin: 4px; }
+	#line_1 { float: right; overflow: hidden; max-width: 195px; }
+	#memory_tag { float: left; }
+	#operator_display { float: right; padding-right: 30%; }
+	.hidden { display: none; }
+	.all_buttons { margin: 5px; }
+	.button { background-color: #efefef; width: 40px; height: 30px; margin: 4px;}
+	.extendedWidthButton { background-color: #efefef; width: 92px; height: 30px; margin: 4px; }
+	.extendedHeightButton { background-color: #efefef; width: 40px; height: 70px; position: absolute; margin: -35px 8px 4px; }
+	</style>
+
+	<script type="text/javascript">
+	var firstLine = document.getElementById('line_1');
+	var line1_show = '0';
+	var num1 = num2 = 0;
+	var operator;
+	var operatorAdded = false;
+	var numberInMemory = "Z";
+	
+	function clicked(buttonType, num)
+	{
+		// alert(eval("9"+"/"+"5"));
+		if(num == 0) {
+			if(operatorAdded) {
+				num1 = line1_show;
+				line1_show = '0';
+				operatorAdded = false;
+			}
+			if((buttonType == 'MR')) {
+				line1_show = (isNaN(numberInMemory)) ? 0 : numberInMemory;
+			}
+			else {
+				if(line1_show == '0')
+				 	// line1_show = parseFloat(buttonType);
+					line1_show = buttonType;
+				else if(buttonType == '.' && (line1_show.indexOf('.') != -1)) {}
+				else
+					{ line1_show = line1_show + buttonType;	}	//.toString()
+			}
+		}
+		else if(num == 1) { // Any operator button clicked
+			evaluateResult();
+			operator = buttonType;
+			toggleOperator(buttonType);
+		}
+		else if((num == 2) && !isNaN(line1_show)) { // Memory button clicked
+			numberInMemory = (numberInMemory == 'Z') ? 0 : numberInMemory;
+			numberInMemory = (buttonType == 'M+') ? (numberInMemory + parseFloat(line1_show)) : (numberInMemory - parseFloat(line1_show));
+			 //eval(numberInMemory + buttonType + (line1_show));
+			toggleMemory();
+		}
+		else if(num == -1) {
+			clearAllDisplay();
+		}
+		refreshLine1();
+	}
+	
+	function evaluateResult(optionalArg)
+	{
+		// optionalArg = (typeof optionalArg === "undefined") ? "" : optionalArg;
+		if(num1 != "" && num1 != 0 && operator != "") { // compute result and then add operator
+			// num2 = line1_show;
+			// if(optionalArg != "")
+				{ line1_show = eval(num1 + operator + line1_show); }
+			num1 = line1_show;
+			refreshLine1();
+		}
+	}
+	
+	function equalClicked()
+	{
+		evaluateResult("=");
+		toggleOperator("");
+	}
+	
+	function clearAllDisplay()
+	{
+		line1_show = '0';
+		num1 = num2 = 0;
+		refreshLine1();
+		toggleOperator("");
+	}
+	
+	function refreshLine1()
+	{
+		if(firstLine == null) {
+			firstLine = document.getElementById('line_1');
+		}
+		firstLine.innerHTML = line1_show;
+	}
+	
+	function toggleOperator(op)
+	{
+		var op_div = document.getElementById('operator_display');
+		if(op == "") {
+			operator = "";
+			op_div.classList.add('hidden');
+			operatorAdded = false;
+		}
+		else {
+			operator = op;
+			op_div.innerHTML = operator;
+			op_div.classList.remove('hidden');
+			operatorAdded = true;
+		}
+	}
+	
+	function negate()
+	{
+		line1_show = -(line1_show);
+		refreshLine1();
+	}
+	
+	function toggleMemory(reset)
+	{
+		var memoryDiv = document.getElementById('memory_tag');
+		reset = (typeof reset === "undefined") ? "" : reset;
+		if(reset != "") {
+			numberInMemory = 'Z';
+			memoryDiv.style.display = 'none';
+		}
+		else {
+			memoryDiv.style.display = 'block';
+		}
+	}
+	
+
+	</script>
+</head>
+
+<body>
+	<div class='complete_boundary'>
+		<div class='title'>CALCULATOR</div>
+		<div class='screen'>
+			<div id='line_1'>0</div><br />
+			<span class='hidden' id='memory_tag'>M</span>
+			<span class='hidden' id='operator_display'></span>
+		</div>
+		<div class='all_buttons'>
+			<input type='button' onclick="toggleMemory('reset');" class='button' value='MC' />
+			<input type='button' onclick="clicked('M+', '2');" class='button' value='M+' />
+			<input type='button' onclick="clicked('M-', '2');" class='button' value='M-' />
+			<input type='button' onclick="clicked('MR', '0');" class='button' value='MR' /><br />
+			<input type='button' onclick="clicked('C', '-1');" class='button' value='C' />
+			<input type='button' onclick="negate('+-');" class='button' value='+/-' />
+			<input type='button' onclick="clicked('/', '1');" class='button' value='÷' />
+			<input type='button' onclick="clicked('*', '1');" class='button' value='x' /><br />
+			<input type='button' onclick="clicked('7', '0');" class='button' value='7' />
+			<input type='button' onclick="clicked('8', '0');" class='button' value='8' />
+			<input type='button' onclick="clicked('9', '0');" class='button' value='9' />
+			<input type='button' onclick="clicked('-', '1');" class='button' value='-' /><br />
+			<input type='button' onclick="clicked('4', '0');" class='button' value='4' />
+			<input type='button' onclick="clicked('5', '0');" class='button' value='5' />
+			<input type='button' onclick="clicked('6', '0');" class='button' value='6' />
+			<input type='button' onclick="clicked('+', '1');" class='button' value='+' /><br />
+			<input type='button' onclick="clicked('1', '0');" class='button' value='1' />
+			<input type='button' onclick="clicked('2', '0');" class='button' value='2' />
+			<input type='button' onclick="clicked('3', '0');" class='button' value='3' />
+			<input type='button' onclick="clicked('0', '0');" class='extendedWidthButton' value='0' />
+			<input type='button' onclick="clicked('.', '0');" class='button' value='.' />
+			<input type='button' onclick="equalClicked();" class='extendedHeightButton' value='=' />
+		</div>
+	</div>
+</body>
+</html>
