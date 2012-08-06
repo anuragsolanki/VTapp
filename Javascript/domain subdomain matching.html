@@ -1,0 +1,57 @@
+<!-- Create a simple form with a textfield and a submit button.
+When I enter a URL in this textfield and submit the form, it should alert me the domain name from the entered url. For example, if I enter http://example.com/folder/file.html, then on submitting the form it should alert something like: "Domain: example.com".
+
+And when I enter a url with subdomain, it should alert the subdomain too. Example: If I enter http://vinsol.example.com/folder/file.html, then on submitting the form it should alert something like: "Domain: example.com, Subdomain: vinsol". -->
+
+<html>
+<head>
+	<title>Domain Sub-domain matching</title>
+	<script type='text/javascript'>
+	function checkDomain()
+	{
+		var url = document.getElementById('url').value;
+		var regexp1 = /\/\//;
+		var no_protocol = url.split(regexp1);
+		if(no_protocol.length > 1)
+		{
+			no_protocol = no_protocol[1];
+		}
+		else
+		{
+			no_protocol = no_protocol[0];
+		}
+		var regexp2 = /\//;
+		no_path = no_protocol.split(regexp2);
+		no_path = no_path[0];
+		
+		var regexp3 = /\./;
+		var dot_separated = no_path.split(regexp3);
+		var len = dot_separated.length;
+		
+		var domain;
+		var sub_domain = "";
+		if(len <= 2)
+		{
+			domain = no_path;
+			sub_domain = "";
+		}
+		else
+		{
+			domain = dot_separated[len-2]+'.'+dot_separated[len-1];
+			for(var i=0;i<=len-3;i++)
+			{
+				sub_domain += dot_separated[i];
+			}
+		}
+		
+		alert("Domain: "+domain+" Subdomain: "+sub_domain);
+	}
+	</script>
+</head>
+<body>
+	<div>
+		<input type='text' id='url' size='50'><br>
+		<input type='button' onclick='checkDomain();' value='Test' />
+	</div>
+</body>
+</html>

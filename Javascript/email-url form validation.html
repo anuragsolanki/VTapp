@@ -1,0 +1,185 @@
+<!-- The form you create like https://www.dropbox.com/s/qccm98brx2hdbrw/Form_validation.png
+Add validations for the correct format of email and homepage(url) using regular expressions.-->
+
+<html>
+<head>
+	<title>
+		Email Url Form Validation
+	</title>
+	<style type='text/css'>
+	form {margin-left:35%;}
+	table {border-width:0px;background:#90EE90;}
+	.header {color:#FFFFFF;font-weight:bold;text-align:center;background:#82D682;}
+	.heavy {font-weight:bold; font-size:80%;}
+	span {font-size:80%; font-weight:normal;}
+	.center {text-align:center;font-weight:normal;}
+	#go {background:#82D682;}
+	</style>
+	<script type='text/javascript'>
+	function validateForm()
+	{
+		var a=document.forms["form9"]["loginId"].value;
+		var flag=true;
+		if (a==null || a=="")
+		{
+			alert("Login Id can't be empty");
+			flag=false;
+		}
+
+		var emailPattern = /^(\w+[\.\-])*\w+@(\w+\.)+\w+$/;
+		var b=document.forms["form9"]["email"].value;
+		if (b==null || b=="")
+		{
+			alert("Email can't be empty");
+			flag=false;
+		}
+		else if(!emailPattern.test(b))
+		{
+			alert("Email is Invalid");
+			flag=false;
+		}
+
+		var c=document.forms["form9"]["name"].value;
+		if (c==null || c=="")
+		{
+			alert("Name can't be empty");
+			flag=false;
+		}
+
+    var LinkPattern=/^(\w{3,4}\:\/\/(\w+\.)+\w+\/)|((\w+\.)+\w+)$/;
+		var d=document.forms["form9"]["homepage"].value;
+		if (d==null || d=="")
+		{
+			alert("Homepage can't be empty");
+			flag=false;
+		}
+		else if(!LinkPattern.test(d))
+		{
+			alert("Homepage URL is Invalid");
+			flag=false;
+		}
+		
+
+		var e=document.forms["form9"]["aboutme"].value;
+		if (e==null || e=="" || e.length<50)
+		{
+			alert("About me should be 50+ characters");
+			flag=false;
+		}
+
+		var f=document.forms["form9"]["notification"].checked;
+		if (f==false)
+		{
+			alert("Notification should be checked");
+			flag=false;
+		}
+
+		return flag;
+	}
+
+	</script>
+</head>
+<body>
+	<form name="form9" action="#" method="post" onsubmit="return validateForm()">
+		<table class="heavy">
+			<colgroup width="40%"></colgroup>
+			<colgroup width="60%"></colgroup>
+			<tr class="header">
+				<td colspan="2">
+					Registration Form
+				</td>
+			</tr>
+
+			<tr>
+				<td clospan="2">
+					&nbsp;
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					Login Id
+				</td>
+				<td>
+					<input type="text" name="loginId" />
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					Email
+				</td>
+				<td>
+					<input type="text" style="background:#FFFF66;" name="email" />
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					Name
+				</td>
+				<td>
+					<input type="text" style="background:#FFFF66;" name="name" />
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					Timezone
+				</td>
+				<td>
+					<select name="timezone">
+						<option>GMT-5.30</option>
+						<option>GMT-5.00</option>
+						<option selected="selected">GMT</option>
+						<option>GMT+5.00</option>
+						<option>GMT+5.30</option>
+					</select>
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					Homepage
+				</td>
+				<td>
+					<input type="text" name="homepage" />
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="2">
+					About me
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="2">
+					<textarea rows="10" cols="60" name="aboutme"></textarea>
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="2">
+					<input type="checkbox" name="notification" id="notification"/>
+					<label for="notification">
+						Receive notification of comments.
+					</label>
+					<br />
+					<span>
+						You will be sent an email when someone posts comments to your blog or album.
+					</span>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="center" colspan="2">
+					Your password will be mailed to you.
+					<br />
+					<input type="submit" value="Go" name="go" id="go" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>
