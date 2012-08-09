@@ -1,0 +1,56 @@
+<html>
+<head>
+	<title>.live Exercise</title>
+ 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<style>
+		#left_span { float: left; min-width: 300px; }
+		#left_span div { padding: 5px 0px; border: 2px solid; }
+		#right_span input { margin: 20px; float: left; }
+		.yellow { background-color: yellow;}
+		.grey { background-color: lightgrey;}
+	</style>
+	<script src="libs/jquery-1.5.0.js"></script>
+	<script type="text/javascript">
+		// Extend jquery with flashing for elements
+		$.fn.flash = function(duration, iterations) {
+			duration = duration || 1000; // Default to 1 second
+			iterations = iterations || 1; // Default to 1 iteration
+			var iterationDuration = duration / iterations;
+
+			for (var i = 0; i < iterations; i++) {
+				this.fadeOut(iterationDuration).fadeIn(iterationDuration);
+			}
+		}
+		var i;
+		function initNumber(){
+			i = 1;
+		}
+		function addDiv() {
+			var $newDiv = $("<div class='grey tapToRemove' id="+i+">" + i + "</div>").appendTo('#left_span');
+			i++;
+			$newDiv.siblings().removeClass('tapToRemove');
+		}
+		$('.tapToRemove').live('click', function() {
+			$this = $(this);
+			$this.prev().addClass('tapToRemove');
+			$this.remove();
+			i--;
+		});
+		$('.grey').live('click', function() {
+			$(this).flash(500, 2);//.fadeOut(250).fadeIn(250).fadeOut(250).fadeIn(250);
+		});
+	</script>
+</head>
+<body onLoad="initNumber();">
+	<span id='left_span'>
+		&nbsp;
+	</span>
+	<div id='right_span'>
+		<input type="button" value="Add Item" onclick="addDiv();" />
+		<br />
+		>> Tap any item to highlight
+		<br />
+		>> Tap last item to remove
+	</div>
+</body>
+</html>
