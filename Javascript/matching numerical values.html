@@ -9,16 +9,9 @@ Also if entered value is not numeric, form should not be submitted. -->
 	{
 		var num1 = document.getElementById('num').value;
 		var regEx = /^\d+$/;
-		if(regEx.test(num1))
-		{
-			document.getElementById('result').value = "True";
-			document.getElementById('subButton').disabled = false;
-		}	
-		else
-		{
-			document.getElementById('result').value = "False";
-			document.getElementById('subButton').disabled = true;
-		}
+		var numerical = regEx.test(num1)
+		document.getElementById('result').value = numerical ? "True" : "False"
+		document.getElementById('subButton').disabled = !numerical;
 	}
 	</script>
 </head>

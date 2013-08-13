@@ -16,10 +16,17 @@ $(document).ready(function() {
 
 		var newDiv = $this.data('newDiv');
 		// console.log($newDiv);
-		newDiv.load('/exercises/data/blog.html ' + divId, function(html) {
-		  console.log('Content updated!');
-			// alert(html);
+		// newDiv.load('/data/blog.html ' + divId, function(html) {
+		//   console.log('Content updated!');
+		// 	alert(html);
+		// });
+		newDiv.load("ajax.html", function(response, status, xhr) {
+			alert(response);
+		// if (status == "error") {
+		    var msg = "Sorry but there was an error: ";
+		    alert(msg + xhr.status + " " + xhr.statusText);
+		  // }
 		});
-		
+				
 	});
 });
