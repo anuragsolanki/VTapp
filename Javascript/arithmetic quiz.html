@@ -26,43 +26,43 @@
 //// TIMER ////
 	function InitializeTimer()
 	{
-	    // Set the length of the timer, in seconds
-	    secs = 60;
-	    StopTheClock();
-	    StartTheTimer();
-	
-			maxQuestion = 20;
-			questions = [];
-			answers = [];
-			i = 0;
-			nextQuestion(0);
+    // Set the length of the timer, in seconds
+    secs = 60;
+    StopTheClock();
+    StartTheTimer();
+
+		maxQuestion = 20;
+		questions = [];
+		answers = [];
+		i = 0;
+		nextQuestion(0);
 	}
 
 	function StopTheClock()
 	{
-	    if(timerRunning)
-	        clearTimeout(timerID);
-	    timerRunning = false;
+    if(timerRunning)
+        clearTimeout(timerID);
+    timerRunning = false;
 	}
 
 	function StartTheTimer()
 	{
-	    if (secs==0)
-	    {
-					timerDiv.innerHTML = "Time Remaining : " + secs + " secs"
-	        StopTheClock();
-	        // Here's where we put something useful that's supposed to happen after the allotted time.
-					ShowResults(0);
-	    }
-	    else
-	    {
-				if(timerDiv == null)
-					timerDiv = document.getElementById('timer');
+    if (secs==0)
+    {
 				timerDiv.innerHTML = "Time Remaining : " + secs + " secs"
-	      secs = secs - 1;
-	      timerRunning = true;
-        timerID = self.setTimeout("StartTheTimer()", delay);
-	    }
+        StopTheClock();
+        // Here's where we put something useful that's supposed to happen after the allotted time.
+				ShowResults(0);
+    }
+    else
+    {
+			if(timerDiv == null)
+				timerDiv = document.getElementById('timer');
+			timerDiv.innerHTML = "Time Remaining : " + secs + " secs"
+      secs = secs - 1;
+      timerRunning = true;
+       timerID = self.setTimeout("StartTheTimer()", delay);
+    }
 	}
 //// TIMER ////
 	
@@ -114,7 +114,7 @@
 		var s1 = eval(str);
 		
 		// if(s % 1 != 0){	
-			s1 = parseFloat(s1.toFixed(1));
+		s1 = parseFloat(s1.toFixed(1));
 		return s1;
 	}
 	
@@ -133,12 +133,12 @@
 		for(var j=0; j<questions.length; j++) {
 			// if(evaluateThis(questions[j]) != -100) //(evaluateThis(questions[j]) != NaN)
 			// {
-				if((evaluateThis(questions[j]) != 100) && (evaluateThis(questions[j]) == evaluateThis(answers[j]))){
-					score++;
-				}
-				else {
-					correctAnswers += questions[j] + " = " + evaluateThis(questions[j]) + "<br />";
-				}
+			if((evaluateThis(questions[j]) != 100) && (evaluateThis(questions[j]) == evaluateThis(answers[j]))){
+				score++;
+			}
+			else {
+				correctAnswers += questions[j] + " = " + evaluateThis(questions[j]) + "<br />";
+			}
 			// }
 		}
 		result += "Score: " + score + " out of " + maxQuestion + "</div>";
