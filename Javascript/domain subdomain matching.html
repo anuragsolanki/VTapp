@@ -9,42 +9,29 @@ And when I enter a url with subdomain, it should alert the subdomain too. Exampl
 	<script type='text/javascript'>
 	function checkDomain()
 	{
-		var url = document.getElementById('url').value;
-		var regexp1 = /\/\//;
-		var no_protocol = url.split(regexp1);
-		if(no_protocol.length > 1)
+		var string = document.getElementById('url').value;
+
+		var reg = /^(?:https?\:\/\/)?(?:www.)?([\w\.]*)\.(\w+\.\w+)/i;
+		if(reg.test(string))
 		{
-			no_protocol = no_protocol[1];
-		}
-		else
-		{
-			no_protocol = no_protocol[0];
-		}
-		var regexp2 = /\//;
-		no_path = no_protocol.split(regexp2);
-		no_path = no_path[0];
-		
-		var regexp3 = /\./;
-		var dot_separated = no_path.split(regexp3);
-		var len = dot_separated.length;
-		
-		var domain;
-		var sub_domain = "";
-		if(len <= 2)
-		{
-			domain = no_path;
-			sub_domain = "";
-		}
-		else
-		{
-			domain = dot_separated[len-2]+'.'+dot_separated[len-1];
-			for(var i=0;i<=len-3;i++)
+			alert('Domain: '+RegExp.$2);
+			if(RegExp.$1.toLowerCase()=='www')
 			{
-				sub_domain += dot_separated[i];
+				alert('No subdomain');
+			}
+			else
+			{
+				alert('Subdomain: '+RegExp.$1);
 			}
 		}
-		
-		alert("Domain: "+domain+" Subdomain: "+sub_domain);
+
+		else
+		{
+			var reg=/^(?:https?\:\/\/)?(\w+.\w+)/;
+			reg.test(string);
+			alert('Domain: '+RegExp.$1);
+			alert('No subdomain');
+		}
 	}
 	</script>
 </head>
