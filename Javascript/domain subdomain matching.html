@@ -11,26 +11,15 @@ And when I enter a url with subdomain, it should alert the subdomain too. Exampl
 	{
 		var string = document.getElementById('url').value;
 
-		var reg = /^(?:https?\:\/\/)?(?:www.)?([\w\.]*)\.(\w+\.\w+)/i;
+		var reg = /^(?:https?\:\/\/)?((\w+\.)*)(\w+\.\w+)/i;
 		if(reg.test(string))
 		{
-			alert('Domain: '+RegExp.$2);
-			if(RegExp.$1.toLowerCase()=='www')
-			{
-				alert('No subdomain');
-			}
-			else
-			{
-				alert('Subdomain: '+RegExp.$1);
-			}
+			alert((RegExp.$1.length == 0) ? 'Domain: '+RegExp.$3 : 'Subdomain: '+RegExp.$1+' Domain: '+RegExp.$3);
+			// alert(RegExp.$1+'-'+RegExp.$2+'-'+RegExp.$3);
 		}
-
 		else
 		{
-			var reg=/^(?:https?\:\/\/)?(\w+.\w+)/;
-			reg.test(string);
-			alert('Domain: '+RegExp.$1);
-			alert('No subdomain');
+			alert('Not a valid url');
 		}
 	}
 	</script>
